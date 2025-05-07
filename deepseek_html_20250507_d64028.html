@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ŞIZOFREN Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="data:,">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            cursor: pointer;
+        }
+        
+        #video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover;
+            opacity: 0.8;
+        }
+        
+        .screen {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            height: 70vh;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
+            border: 1px solid rgba(255, 0, 255, 0.3);
+        }
+        
+        .pfp-container {
+            margin-top: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .pfp {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ff00ff;
+            box-shadow: 0 0 20px #00ffff;
+            transition: all 0.3s ease;
+        }
+        
+        .pfp:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px #ff00ff;
+        }
+        
+        .title {
+            font-family: 'Rubik Mono One', sans-serif;
+            font-size: 3.5rem;
+            color: #fff;
+            text-shadow: 
+                0 0 10px #ff00ff, 
+                0 0 20px #ff00ff, 
+                0 0 30px #00ffff;
+            margin-top: 20px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .badges {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px #ff00ff;
+        }
+
+        .badge i {
+            font-size: 1.2rem;
+            color: #000;
+        }
+
+        .subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            font-size: 1.1rem;
+            color: #fff;
+            text-align: center;
+            margin-top: 25px;
+            line-height: 1.6;
+            max-width: 80%;
+            letter-spacing: 1px;
+        }
+
+        .highlight {
+            font-weight: 500;
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff;
+        }
+
+        .service-info {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 1rem;
+            color: #fff;
+            text-align: center;
+            margin-top: auto;
+            padding-bottom: 20px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px #00ffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-info::before,
+        .service-info::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.5);
+        }
+
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000;
+            border: 1px solid #ff00ff;
+            box-shadow: 0 0 15px rgba(255,0,255,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(255,0,255,0.9);
+        }
+
+        .music-control i {
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 
+                    0 0 10px #ff00ff, 
+                    0 0 20px #ff00ff, 
+                    0 0 30px #00ffff;
+            }
+            to {
+                text-shadow: 
+                    0 0 15px #ff00ff, 
+                    0 0 25px #ff00ff, 
+                    0 0 35px #00ffff,
+                    0 0 45px #00ffff;
+            }
+        }
+
+        /* Responsive Tasarım */
+        @media (max-width: 768px) {
+            .screen {
+                width: 95%;
+                height: 85vh;
+                padding: 15px;
+            }
+            
+            .title {
+                font-size: 2.5rem;
+                margin-top: 15px;
+            }
+            
+            .pfp {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+                margin-top: 15px;
+            }
+            
+            .music-control {
+                width: 45px;
+                height: 45px;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2rem;
+                letter-spacing: 3px;
+            }
+            
+            .badges {
+                gap: 15px;
+            }
+            
+            .badge {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .service-info {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video id="video-background" autoplay loop muted playsinline>
+        <source src="https://v1.pinimg.com/videos/mc/720p/d7/41/83/d74183538cb2ca44bf6ed463e71eb391.mp4" type="video/mp4">
+    </video>
+    
+    <div class="screen">
+        <div class="pfp-container">
+            <img src="https://scontent-muc2-1.xx.fbcdn.net/v/t1.15752-9/490996609_679089741375988_5754058428478299155_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=0024fc&_nc_ohc=APR8Gx6eMrQQ7kNvwHkkdLQ&_nc_oc=Adkdh43QkhbcUgKmg2pHcyy7ck_d5IEMVoG_fJZb0yUBbljos0QobWwC8ZHOceZ_EE06AzYcsqVRxtOnadqgl0sT&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-muc2-1.xx&oh=03_Q7cD2QEwPD-zotpR2HVg4_ATqjM3qEcVsehiMvg5ermfMXNESg&oe=6842CFE8" alt="Profile" class="pfp">
+        </div>
+        <h1 class="title">ŞIZOFREN</h1>
+        <div class="badges">
+            <div class="badge" title="Verified">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="badge" title="Developer">
+                <i class="fas fa-code"></i>
+            </div>
+        </div>
+        <p class="subtitle">For <span class="highlight">Cybersecurity</span>, <span class="highlight">Account Takeovers</span>, <span class="highlight">Disabling Accounts</span>, <span class="highlight">Lookups</span>, and Much More<br>— Contact <span class="highlight">ŞİZOFREN</span></p>
+        
+        <div class="service-info">
+            <i class="fas fa-circle" style="color: lime; font-size: 0.7rem;"></i> 7/24 | Aktif hizmetler
+        </div>
+    </div>
+
+    <!-- MÜZİK ÇALAR -->
+    <audio id="bgMusic" loop preload="none">
+        <source src="https://drive.google.com/uc?export=download&id=1r89DfqZhrVJxa0xSGIBwi78n8Sn-B7O0" type="audio/mpeg">
+    </audio>
+
+    <!-- MÜZİK KONTROL BUTONU -->
+    <div class="music-control" id="musicToggle">
+        <i class="fas fa-play" id="musicIcon"></i>
+    </div>
+
+    <script>
+        // MÜZİK KONTROL SİSTEMİ
+        const music = document.getElementById('bgMusic');
+        const toggleBtn = document.getElementById('musicToggle');
+        const musicIcon = document.getElementById('musicIcon');
+        let musicReady = false;
+
+        // Müzik durumunu güncelle
+        function updateMusicUI() {
+            if (music.paused) {
+                musicIcon.classList.replace('fa-volume-up', 'fa-play');
+                musicIcon.style.color = "#ff00ff";
+            } else {
+                musicIcon.classList.replace('fa-play', 'fa-volume-up');
+                musicIcon.style.color = "#00ffff";
+            }
+        }
+
+        // Müzik sistemini hazırla
+        function initMusicSystem() {
+            if (musicReady) return;
+            
+            musicReady = true;
+            music.load();
+            console.log("Müzik sistemi hazır");
+            
+            // Kullanıcı etkileşimi sonrası çalmayı dene
+            document.body.addEventListener('click', () => {
+                if (music.paused) {
+                    music.play()
+                        .then(() => updateMusicUI())
+                        .catch(e => console.log("Çalma hatası:", e));
+                }
+            }, { once: true });
+        }
+
+        // Müzik butonu kontrolü
+        toggleBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            if (!musicReady) initMusicSystem();
+            
+            if (music.paused) {
+                music.play()
+                    .then(() => updateMusicUI())
+                    .catch(e => console.log("Çalma hatası:", e));
+            } else {
+                music.pause();
+                updateMusicUI();
+            }
+        });
+
+        // Sayfa yüklendiğinde müzik sistemini hazırla
+        document.addEventListener('DOMContentLoaded', initMusicSystem);
+
+        // Müzik hata yönetimi
+        music.addEventListener('error', () => {
+            console.error("Müzik yüklenemedi");
+            toggleBtn.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
